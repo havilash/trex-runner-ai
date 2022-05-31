@@ -1,6 +1,5 @@
 import os
 import pickle
-import pandas
 import pygame
 from spritesheet import Spritesheet
 import random
