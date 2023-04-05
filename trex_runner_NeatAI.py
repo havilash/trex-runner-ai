@@ -110,6 +110,8 @@ class Trex():
         mask = obstacle.get_mask()
         offset = (obstacle.x - self.x, obstacle.y - round(self.y))
         point = trex_mask.overlap(mask, offset) # point of intercept
+        if point:
+            print(point)
 
         if point: return True
         return False
@@ -233,7 +235,7 @@ def eval_genomes(genomes, config):
         nets.append(net)
         trexes.append(Trex(230,350))
         ge.append(genome)
-    
+        
     clock = pygame.time.Clock()
     while is_running and len(trexes) > 0:
         clock.tick(FPS)
@@ -253,7 +255,7 @@ def eval_genomes(genomes, config):
         for x, trex in enumerate(trexes):
             ge[x].fitness += 0.1
             if obstacles:
-                print(ge[x].fitness)
+                # print(ge[x].fitness)
 
                 # Neural Network Output
                 output = nets[x].activate((trex.x, trex.x - obstacles[obs_ind].x, FLOOR - (obstacles[obs_ind].y + obstacles[obs_ind].img.get_height())))
@@ -317,7 +319,7 @@ def run(config_file):
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_file)
 
-    
+    p = neat.Population(config)
 
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
